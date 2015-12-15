@@ -1,23 +1,27 @@
 OASISFormat: 0.4
 Name:        mirage-console
 Version:     2.1.3
-Synopsis:    Console implementation for both Xen and Unix
-Authors:     Anil Madhavapeddy, David Scott
+Synopsis:    Console implementation for Xen and Unix and Solo5
+Authors:     Anil Madhavapeddy, David Scott, Dan Williams
 License:     ISC
 Plugins:     META (0.4)
 BuildTools:  ocamlbuild
 
 Flag unix
   Description:        true to build Unix library
+  Default:            false
+
+Flag solo5
+  Description:        true to build Solo5 library
   Default:            true
 
 Flag xen
   Description:        true to build Xen library
-  Default:            false
+  Default:            true
 
 Flag miragexen
   Description:        true to build Xen kernelspace console
-  Default:            false
+  Default:            true
 
 Flag xenctrl
   Description:        true to depend on Unix xenctrl libraries
@@ -73,6 +77,17 @@ Executable mirage_console_cli
   Path:               cli
   MainIs:             main.ml
   BuildDepends:       mirage-console, mirage-console.unix, io-page.unix, io-page, xen-evtchn, xen-evtchn.unix, xen-evtchn.unix.activations, xen-gnt.unix, xen-gnt, mirage-console.backend, xenstore, xenstore.client, xenstore_transport, xenstore_transport.lwt, lwt, lwt.unix, cmdliner
+
+Library mirage_console_solo5
+  Build$:             flag(solo5)
+  CompiledObject:     native
+  Path:               solo5
+  Findlibparent:      mirage-console
+  Findlibname:        solo5
+  Modules:            Console_solo5
+  BuildDepends:       lwt, mirage-types, mirage-console, cstruct.lwt
+  CSources:           solo5_stubs.c
+  CCOpt:              -ffreestanding -mcmodel=large -mno-red-zone -mno-3dnow -std=gnu99 -O0 -Wall -Wextra -Werror -g -fno-PIC -I/root/solo5/kernel/
 
 Executable portable
   Build$:             flag(unix)

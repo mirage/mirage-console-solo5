@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 2e23591c00503c6ff9959361e18df44f)
+# DO NOT EDIT (digest: c1d0d3a0ef5219b5ccaa087802197f03)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -105,6 +105,21 @@ true: annot, bin_annot
 <cli/*.ml{,i,y}>: use_mirage_console_backend
 <cli/*.ml{,i,y}>: use_mirage_console_proto
 <cli/*.ml{,i,y}>: use_mirage_console_unix
+# Library mirage_console_solo5
+"solo5/mirage_console_solo5.cmxs": use_mirage_console_solo5
+<solo5/*.ml{,i,y}>: oasis_library_mirage_console_solo5_ccopt
+"solo5/solo5_stubs.c": oasis_library_mirage_console_solo5_ccopt
+"solo5/mirage_console_solo5.cmxa": use_libmirage_console_solo5_stubs
+<solo5/*.ml{,i,y}>: pkg_cstruct.lwt
+<solo5/*.ml{,i,y}>: pkg_lwt
+<solo5/*.ml{,i,y}>: pkg_mirage-types
+<solo5/*.ml{,i,y}>: pkg_mirage-types.lwt
+<solo5/*.ml{,i,y}>: use_mirage-console
+"solo5/solo5_stubs.c": pkg_cstruct.lwt
+"solo5/solo5_stubs.c": pkg_lwt
+"solo5/solo5_stubs.c": pkg_mirage-types
+"solo5/solo5_stubs.c": pkg_mirage-types.lwt
+"solo5/solo5_stubs.c": use_mirage-console
 # Executable portable
 <lib_test/portable.{native,byte}>: pkg_cstruct.lwt
 <lib_test/portable.{native,byte}>: pkg_lwt

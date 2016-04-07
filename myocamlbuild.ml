@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 7b585ddddcaee71722c243cc132f5566) *)
+(* DO NOT EDIT (digest: d73dcad9aa5b73990c9cd6876de9550c) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -647,7 +647,7 @@ let package_default =
                       A "-ccopt";
                       A "-fno-PIC";
                       A "-ccopt";
-                      A "-I/root/solo5/kernel/"
+                      A "-I/home/solo5/solo5/kernel/"
                    ])
             ])
        ];

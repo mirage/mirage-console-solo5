@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: d73dcad9aa5b73990c9cd6876de9550c) *)
+(* DO NOT EDIT (digest: ac76b5e85e1076358fb66b931a228e17) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -635,7 +635,7 @@ let package_default =
                       A "-ccopt";
                       A "-std=gnu99";
                       A "-ccopt";
-                      A "-O0";
+                      A "-O2";
                       A "-ccopt";
                       A "-Wall";
                       A "-ccopt";
@@ -643,11 +643,13 @@ let package_default =
                       A "-ccopt";
                       A "-Werror";
                       A "-ccopt";
-                      A "-g";
+                      A "-D__SOLO5__";
                       A "-ccopt";
                       A "-fno-PIC";
                       A "-ccopt";
-                      A "-I/home/solo5/solo5/kernel/"
+                      A "-g";
+                      A "-ccopt";
+                      A "-I/home/solo5/solo5/kernel"
                    ])
             ])
        ];
@@ -667,6 +669,6 @@ let conf = {MyOCamlbuildFindlib.no_automatic_syntax = false}
 
 let dispatch_default = MyOCamlbuildBase.dispatch_default conf package_default;;
 
-# 671 "myocamlbuild.ml"
+# 673 "myocamlbuild.ml"
 (* OASIS_STOP *)
 Ocamlbuild_plugin.dispatch dispatch_default;;

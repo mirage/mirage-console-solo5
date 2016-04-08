@@ -87,7 +87,7 @@ Library mirage_console_solo5
   Modules:            Console_solo5
   BuildDepends:       lwt, mirage-types, mirage-console, cstruct.lwt
   CSources:           solo5_stubs.c
-  CCOpt:              -ffreestanding -mcmodel=large -mno-red-zone -mno-3dnow -std=gnu99 -O0 -Wall -Wextra -Werror -g -fno-PIC -I/home/solo5/solo5/kernel/
+  CCOpt:	-ffreestanding -mcmodel=large -mno-red-zone -mno-3dnow -std=gnu99 -O2 -Wall -Wextra -Werror -D__SOLO5__ -fno-PIC -g   -I/home/solo5/solo5/kernel
 
 Executable portable
   Build$:             flag(unix)

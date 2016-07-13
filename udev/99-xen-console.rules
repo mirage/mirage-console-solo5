@@ -1,2 +1,0 @@
-# Set up secondary Xen consoles
-SUBSYSTEM=="xen", DEVPATH=="/devices/console-[0-9]", RUN+="xenconsole-setup-tty"

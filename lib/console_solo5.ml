@@ -17,6 +17,9 @@
 open Lwt
 open Printf
 
+
+external solo5_console_write: string -> unit = "stub_console_write"
+
 (* TODO everything connects to the same console for now *)
 (* TODO management service for logging *)
 type t = {
@@ -42,18 +45,14 @@ let connect id =
 let disconnect _t = return ()
 let id {id} = id
 
-let read t =
-  Lwt_bytes.read Lwt_unix.stdin t.read_buffer.Cstruct.buffer 0 (Cstruct.len t.read_buffer) >>= fun n ->
-  if n = 0 || t.closed
-  then return `Eof
-  else return (`Ok (Cstruct.sub t.read_buffer 0 n))
+let read t = 
+  return (`Eof)
+
+let write_string t buf off len = prerr_string (String.sub buf off len); flush stderr; len
 
 let write_one t buf =
-  Lwt_cstruct.complete
-    (fun frag ->
-       let open Cstruct in
-       Lwt_bytes.write Lwt_unix.stdout frag.buffer frag.off frag.len
-    ) buf
+  solo5_console_write (Cstruct.to_string buf);
+  return ()
 
 let write t buf =
   if t.closed then return `Eof
@@ -73,12 +72,11 @@ let close t =
   t.closed <- true;
   return ()
 
-let write_string t buf off len = prerr_string (String.sub buf off len); flush stderr; len
-
 let log t s = prerr_endline s
 
 let log_s t s =
   let s = s ^ "\n" in
   let buf = Cstruct.create (String.length s) in
   Cstruct.blit_from_string s 0 buf 0 (String.length s);
+  print_string s;
   write_one t buf

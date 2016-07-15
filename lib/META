@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: 6c4f2a086c5bb543ed5af934528597d5)
-version = "2.1.3"
+# DO NOT EDIT (digest: ae1e5b0b53adde5f06b0056a825f0daf)
+version = "0.1.1"
 description = "Console implementation for Solo5"
 requires = "lwt cstruct.lwt mirage-console mirage-solo5"
 archive(byte) = "mirage-console-solo5.cma"

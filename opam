@@ -1,12 +1,13 @@
 opam-version: "1.2"
-maintainer:    "anil@recoil.org"
-homepage:      "https://github.com/mirage/mirage-console"
-bug-reports:   "https://github.com/mirage/mirage-console/issues"
-dev-repo:      "https://github.com/mirage/mirage-console.git"
+maintainer:    "martin@lucina.net"
+homepage:      "https://github.com/mirage/mirage-console-solo5"
+bug-reports:   "https://github.com/mirage/mirage-console-solo5/issues"
+dev-repo:      "https://github.com/mirage/mirage-console-solo5.git"
+license:       "ISC"
 authors: [
-  "Anil Madhavapeddy"
-  "David Scott"
-  "Dan Williams"
+  "Anil Madhavapeddy <anil@recoil.org>"
+  "Dan Williams <djwillia@us.ibm.com>"
+  "Martin Lucina <martin@lucina.net>"
 ]
 tags: [
   "org:mirage"

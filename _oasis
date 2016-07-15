@@ -1,8 +1,8 @@
 OASISFormat: 0.4
 Name:        mirage-console-solo5
-Version:     2.1.3
+Version:     0.1.1
 Synopsis:    Console implementation for Solo5
-Authors:     Anil Madhavapeddy, David Scott, Dan Williams
+Authors:     Anil Madhavapeddy, Dan Williams, Martin Lucina
 License:     ISC
 Plugins:     META (0.4)
 BuildTools:  ocamlbuild

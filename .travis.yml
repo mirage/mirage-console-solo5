@@ -1,7 +1,12 @@
 language: c
-install: wget https://raw.githubusercontent.com/avsm/ocaml-travisci-skeleton/master/.travis-opam.sh
+sudo: required
+dist: trusty
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-opam.sh
 script: bash -ex .travis-opam.sh
 env:
-  - FORK_USER=avsm OCAML_VERSION=4.01 PACKAGE="mirage-console" DEPOPTS="mirage-xen xenstore xenstore_transport xen-gnt xen-evtchn shared-memory-ring"
-  - FORK_USER=avsm OCAML_VERSION=latest PACKAGE="mirage-console" DEPOPTS="mirage-xen xenstore xenstore_transport xen-gnt xen-evtchn shared-memory-ring"
-  - FORK_USER=avsm OCAML_VERSION=latest PACKAGE="mirage-console" DEPOPTS="xenctrl mirage-xen xenstore xenstore_transport xen-gnt xen-evtchn shared-memory-ring"
+    global:
+        - EXTRA_REMOTES="https://github.com/mirage/mirage-dev.git"
+        - TESTS=false
+    matrix:
+        - OCAML_VERSION=4.03
+        - OCAML_VERSION=4.02

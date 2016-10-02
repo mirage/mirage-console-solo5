@@ -40,19 +40,19 @@ let connect id =
   let read_buffer = Cstruct.create 1024 in
   let closed = false in
   let t = { id; read_buffer; closed } in
-  return (`Ok t)
+  return t
 
-let disconnect _t = return ()
+let disconnect _t = return_unit
 let id {id} = id
 
-let read t = 
-  return (`Eof)
+let read t =
+  return `Eof
 
 let write_string t buf off len = prerr_string (String.sub buf off len); flush stderr; len
 
 let write_one t buf =
   solo5_console_write (Cstruct.to_string buf);
-  return ()
+  return_unit
 
 let write t buf =
   if t.closed then return `Eof

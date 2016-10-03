@@ -28,7 +28,6 @@ type t = {
   mutable closed: bool;
 }
 
-type id = string
 type 'a io = 'a Lwt.t
 type error = [ `Invalid_console of string ]
 type buffer = Cstruct.t
@@ -43,7 +42,6 @@ let connect id =
   return t
 
 let disconnect _t = return_unit
-let id {id} = id
 
 let read t =
   return `Eof

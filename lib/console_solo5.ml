@@ -14,8 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-open Lwt
-open Printf
+open Lwt.Infix
 
 external solo5_console_write: string -> unit = "stub_console_write"
 
@@ -38,38 +37,35 @@ let connect id =
   let read_buffer = Cstruct.create 1024 in
   let closed = false in
   let t = { id; read_buffer; closed } in
-  return t
+  Lwt.return t
 
-let disconnect _t = return_unit
+let disconnect _t = Lwt.return_unit
 
-let read t =
-  return `Eof
+let read _t = Lwt.return `Eof
 
-let write_string t buf off len = prerr_string (String.sub buf off len); flush stderr; len
-
-let write_one t buf =
+let write_one _t buf =
   solo5_console_write (Cstruct.to_string buf);
-  return_unit
+  Lwt.return_unit
 
 let write t buf =
-  if t.closed then return `Eof
+  if t.closed then
+    Lwt.return `Eof
   else
-    write_one t buf
-    >>= fun () ->
-    return (`Ok ())
+    write_one t buf >>= fun () ->
+    Lwt.return (`Ok ())
 
 let writev t bufs =
-  if t.closed then return `Eof
+  if t.closed then
+    Lwt.return `Eof
   else
-    Lwt_list.iter_s (write_one t) bufs
-    >>= fun () ->
-    return (`Ok ())
+    Lwt_list.iter_s (write_one t) bufs >>= fun () ->
+    Lwt.return (`Ok ())
 
 let close t =
   t.closed <- true;
-  return ()
+  Lwt.return ()
 
-let log t s = prerr_endline s
+let log _t s = prerr_endline s
 
 let log_s t s =
   let s = s ^ "\n" in

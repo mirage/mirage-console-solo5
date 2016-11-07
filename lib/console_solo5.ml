@@ -34,7 +34,7 @@ let error_message (`Invalid_console msg) =
   Printf.sprintf "Invalid console '%s'" msg
 
 let connect id =
-  let read_buffer = Cstruct.create 1024 in
+  let read_buffer = Cstruct.create 0 in
   let closed = false in
   let t = { id; read_buffer; closed } in
   Lwt.return t

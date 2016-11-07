@@ -17,7 +17,6 @@
 open Lwt
 open Printf
 
-
 external solo5_console_write: string -> unit = "stub_console_write"
 
 (* TODO everything connects to the same console for now *)

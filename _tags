@@ -1,26 +1,4 @@
-# OASIS_START
-# DO NOT EDIT (digest: f6a4833c1a0d7ee646b4679cc2e4b08f)
-# Ignore VCS directories, you can use the same kind of rule outside
-# OASIS_START/STOP if you want to exclude directories that contains
-# useless stuff for the build process
-true: annot, bin_annot
-<**/.svn>: -traverse
-<**/.svn>: not_hygienic
-".bzr": -traverse
-".bzr": not_hygienic
-".hg": -traverse
-".hg": not_hygienic
-".git": -traverse
-".git": not_hygienic
-"_darcs": -traverse
-"_darcs": not_hygienic
-# Library mirage-console-solo5
-"lib/mirage-console-solo5.cmxs": use_mirage-console-solo5
-<lib/*.ml{,i,y}>: pkg_cstruct.lwt
-<lib/*.ml{,i,y}>: pkg_lwt
-<lib/*.ml{,i,y}>: pkg_mirage-console
-<lib/*.ml{,i,y}>: pkg_mirage-solo5
-# OASIS_STOP
-<cli/main.ml>: pkg_lwt.syntax, syntax_camlp4o
-<backend/conback.ml>: pkg_lwt.syntax, syntax_camlp4o
-<xen/console_xen.ml>: pkg_lwt.syntax, syntax_camlp4o
+true: bin_annot, safe_string, principal
+true: warn(A-44)
+
+<lib/*>: package(lwt cstruct mirage-types.lwt)

@@ -1,0 +1,4 @@
+B _build/*
+S lib/*
+
+PKG lwt mirage-solo5 mirage-types.lwt

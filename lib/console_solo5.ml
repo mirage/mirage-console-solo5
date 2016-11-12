@@ -27,11 +27,12 @@ type t = {
 }
 
 type 'a io = 'a Lwt.t
-type error = [ `Invalid_console of string ]
 type buffer = Cstruct.t
 
-let error_message (`Invalid_console msg) =
-  Printf.sprintf "Invalid console '%s'" msg
+(* NEEDED until we change FLOW *)
+let error_message e =
+  M_util.pp_console_error Format.str_formatter e ;
+  Format.flush_str_formatter ()
 
 let connect id =
   let read_buffer = Cstruct.create 0 in
@@ -43,7 +44,7 @@ let disconnect _t = Lwt.return_unit
 
 let read _t = Lwt.return `Eof
 
-let write_one _t buf =
+let write_one buf =
   solo5_console_write (Cstruct.to_string buf);
   Lwt.return_unit
 
@@ -51,25 +52,22 @@ let write t buf =
   if t.closed then
     Lwt.return `Eof
   else
-    write_one t buf >>= fun () ->
+    write_one buf >>= fun () ->
     Lwt.return (`Ok ())
 
 let writev t bufs =
   if t.closed then
     Lwt.return `Eof
   else
-    Lwt_list.iter_s (write_one t) bufs >>= fun () ->
+    Lwt_list.iter_s write_one bufs >>= fun () ->
     Lwt.return (`Ok ())
 
 let close t =
   t.closed <- true;
   Lwt.return ()
 
-let log _t s = prerr_endline s
-
-let log_s t s =
-  let s = s ^ "\n" in
-  let buf = Cstruct.create (String.length s) in
-  Cstruct.blit_from_string s 0 buf 0 (String.length s);
-  print_string s;
-  write_one t buf
+let log t s =
+  if t.closed then
+    Lwt.return_unit
+  else
+    write_one (Cstruct.of_string (s ^ "\n"))

@@ -29,11 +29,6 @@ type t = {
 type 'a io = 'a Lwt.t
 type buffer = Cstruct.t
 
-(* NEEDED until we change FLOW *)
-let error_message e =
-  Mirage_pp.pp_console_error Format.str_formatter e ;
-  Format.flush_str_formatter ()
-
 let connect id =
   let read_buffer = Cstruct.create 0 in
   let closed = false in
@@ -42,7 +37,7 @@ let connect id =
 
 let disconnect _t = Lwt.return_unit
 
-let read _t = Lwt.return `Eof
+let read _t = Lwt.return @@ Ok `Eof
 
 let write_one buf =
   solo5_console_write (Cstruct.to_string buf);
@@ -50,17 +45,15 @@ let write_one buf =
 
 let write t buf =
   if t.closed then
-    Lwt.return `Eof
+    Lwt.return @@ Error `Closed
   else
-    write_one buf >>= fun () ->
-    Lwt.return (`Ok ())
+    write_one buf >>= fun () -> Lwt.return @@ Ok ()
 
 let writev t bufs =
   if t.closed then
-    Lwt.return `Eof
+    Lwt.return @@ Error `Closed
   else
-    Lwt_list.iter_s write_one bufs >>= fun () ->
-    Lwt.return (`Ok ())
+    Lwt_list.iter_s write_one bufs >>= fun () -> Lwt.return @@ Ok ()
 
 let close t =
   t.closed <- true;

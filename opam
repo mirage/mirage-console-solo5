@@ -21,7 +21,7 @@ depends: [
   "topkg" {build}
   "mirage-types-lwt"
   "mirage-solo5"
-  "mirage-runtime"
   "cstruct"
   "lwt"
 ]
+available: [ocaml-version >= "4.03.0"]

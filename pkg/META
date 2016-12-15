@@ -1,6 +1,6 @@
 description = "Console implementation for Solo5"
 version = "%%VERSION_NUM%%"
-requires = "lwt cstruct mirage-solo5 mirage-types-lwt"
+requires = "lwt cstruct mirage-solo5 mirage-types-lwt mirage-runtime"
 archive(byte) = "mirage-console-solo5.cma"
 archive(native) = "mirage-console-solo5.cmxa"
 plugin(byte) = "mirage-console-solo5.cma"

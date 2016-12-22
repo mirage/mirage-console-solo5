@@ -1,4 +1,4 @@
 B _build/*
 S src/*
 
-PKG lwt mirage-solo5 mirage-types.lwt
+PKG lwt mirage-solo5 mirage-console-lwt cstruct

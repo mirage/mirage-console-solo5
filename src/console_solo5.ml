@@ -15,6 +15,7 @@
  *)
 
 open Lwt.Infix
+open Result
 
 external solo5_console_write: string -> unit = "stub_console_write"
 
@@ -28,6 +29,11 @@ type t = {
 
 type 'a io = 'a Lwt.t
 type buffer = Cstruct.t
+
+type error
+let pp_error _ (_:error) = assert false
+type write_error = Mirage_flow.write_error
+let pp_write_error = Mirage_flow.pp_write_error
 
 let connect id =
   let read_buffer = Cstruct.create 0 in

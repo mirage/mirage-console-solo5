@@ -1,4 +1,4 @@
 true: bin_annot, safe_string, principal
 true: warn(A-44)
 
-<lib/*>: package(lwt cstruct mirage-types-lwt)
+<src/*>: package(lwt cstruct mirage-console-lwt)

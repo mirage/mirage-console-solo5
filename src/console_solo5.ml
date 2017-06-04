@@ -17,7 +17,7 @@
 open Lwt.Infix
 open Result
 
-external solo5_console_write: string -> unit = "stub_console_write"
+external solo5_console_write: string -> int = "stub_console_write"
 
 (* TODO everything connects to the same console for now *)
 (* TODO management service for logging *)
@@ -46,8 +46,9 @@ let disconnect _t = Lwt.return_unit
 let read _t = Lwt.return @@ Ok `Eof
 
 let write_one buf =
-  solo5_console_write (Cstruct.to_string buf);
-  Lwt.return_unit
+  Lwt_cstruct.complete (fun buf ->
+      Lwt.return (solo5_console_write (Cstruct.to_string buf)))
+    buf
 
 let write t buf =
   if t.closed then

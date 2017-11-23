@@ -15,7 +15,6 @@
  *)
 
 open Lwt.Infix
-open Result
 
 external solo5_console_write: string -> unit = "stub_console_write"
 

@@ -14,9 +14,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-open Lwt.Infix
-
-external solo5_console_write: string -> unit = "stub_console_write"
+external solo5_console_write:
+  Cstruct.buffer -> int -> unit = "mirage_solo5_console_write"
 
 (* TODO everything connects to the same console for now *)
 (* TODO management service for logging *)
@@ -45,20 +44,20 @@ let disconnect _t = Lwt.return_unit
 let read _t = Lwt.return @@ Ok `Eof
 
 let write_one buf =
-  solo5_console_write (Cstruct.to_string buf);
-  Lwt.return_unit
+  solo5_console_write buf.Cstruct.buffer buf.Cstruct.len;
+  Lwt.return (Ok ())
 
 let write t buf =
   if t.closed then
     Lwt.return @@ Error `Closed
   else
-    write_one buf >>= fun () -> Lwt.return @@ Ok ()
+    write_one buf
 
-let writev t bufs =
-  if t.closed then
-    Lwt.return @@ Error `Closed
-  else
-    Lwt_list.iter_s write_one bufs >>= fun () -> Lwt.return @@ Ok ()
+let writev t = function
+  | []       -> Lwt.return (Ok ())
+  | [buffer] -> write t buffer
+  | buffers  ->
+    write t @@ Cstruct.concat buffers
 
 let close t =
   t.closed <- true;
@@ -68,4 +67,6 @@ let log t s =
   if t.closed then
     Lwt.return_unit
   else
-    write_one (Cstruct.of_string (s ^ "\n"))
+    let buf = (Cstruct.of_string (s ^ "\n")) in
+    ignore (write_one buf);
+    Lwt.return_unit

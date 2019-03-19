@@ -25,3 +25,4 @@ depends: [
   "lwt"
 ]
 available: [ocaml-version >= "4.04.2"]
+synopsis: "Solo5 implementation of MirageOS console interface"

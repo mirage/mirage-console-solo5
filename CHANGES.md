@@ -1,3 +1,8 @@
+## v0.6.1 (2019-11-01)
+
+* Adapt to mirage-console 3.0.0 changes (#19, @hannesm)
+* Bump minimal OCaml version to 4.06.0 (#19, @hannesm)
+
 ## v0.6.0 (2019-09-24)
 
 * Bump version number and dependencies to stay in sync with other Mirage/Solo5

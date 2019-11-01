@@ -25,9 +25,6 @@ type t = {
   mutable closed: bool;
 }
 
-type 'a io = 'a Lwt.t
-type buffer = Cstruct.t
-
 type error
 let pp_error _ (_:error) = assert false
 type write_error = Mirage_flow.write_error

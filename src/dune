@@ -1,4 +1,13 @@
 (library
   (name console_solo5)
   (public_name mirage-console-solo5)
-  (libraries lwt cstruct mirage-console))
+  (libraries lwt cstruct mirage-console)
+ (foreign_stubs
+  (language c)
+  (names solo5_console_stubs)))
+
+(rule
+ (target solo5_console_stubs.c)
+ (deps solo5_console_stubs.freestanding.c solo5_console_stubs.default.c)
+ (action
+  (copy solo5_console_stubs.%{context_name}.c %{target})))

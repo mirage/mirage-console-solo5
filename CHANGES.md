@@ -1,3 +1,8 @@
+## v0.7.0 (2022-02-01)
+
+* `mirage-console-solo5` requires OCaml 4.08 (@hannesm, #20)
+* Be able to build and install `mirage-console-solo5` without the expected `dune`'s context (@TheLortex, @dinosaure, #21)
+
 ## v0.6.1 (2019-11-01)
 
 * Adapt to mirage-console 3.0.0 changes (#19, @hannesm)

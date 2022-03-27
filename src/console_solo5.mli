@@ -14,6 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-(** Text console input/output operations. *)
 include Mirage_console.S
+(** Text console input/output operations. *)
+
 val connect : string -> t Lwt.t

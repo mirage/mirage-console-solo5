@@ -14,20 +14,18 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-external solo5_console_write:
-  Cstruct.buffer -> int -> unit = "mirage_solo5_console_write"
+external solo5_console_write : Cstruct.buffer -> int -> unit
+  = "mirage_solo5_console_write"
 
 (* TODO everything connects to the same console for now *)
 (* TODO management service for logging *)
-type t = {
-  id: string;
-  read_buffer: Cstruct.t;
-  mutable closed: bool;
-}
-
+type t = { id : string; read_buffer : Cstruct.t; mutable closed : bool }
 type error
-let pp_error _ (_:error) = assert false
+
+let pp_error _ (_ : error) = assert false
+
 type write_error = Mirage_flow.write_error
+
 let pp_write_error = Mirage_flow.pp_write_error
 
 let connect id =
@@ -37,7 +35,6 @@ let connect id =
   Lwt.return t
 
 let disconnect _t = Lwt.return_unit
-
 let read _t = Lwt.return @@ Ok `Eof
 
 let write_one buf =
@@ -45,25 +42,20 @@ let write_one buf =
   Lwt.return (Ok ())
 
 let write t buf =
-  if t.closed then
-    Lwt.return @@ Error `Closed
-  else
-    write_one buf
+  if t.closed then Lwt.return @@ Error `Closed else write_one buf
 
 let writev t = function
-  | []       -> Lwt.return (Ok ())
-  | [buffer] -> write t buffer
-  | buffers  ->
-    write t @@ Cstruct.concat buffers
+  | [] -> Lwt.return (Ok ())
+  | [ buffer ] -> write t buffer
+  | buffers -> write t @@ Cstruct.concat buffers
 
 let close t =
   t.closed <- true;
   Lwt.return ()
 
 let log t s =
-  if t.closed then
-    Lwt.return_unit
+  if t.closed then Lwt.return_unit
   else
-    let buf = (Cstruct.of_string (s ^ "\n")) in
+    let buf = Cstruct.of_string (s ^ "\n") in
     ignore (write_one buf);
     Lwt.return_unit

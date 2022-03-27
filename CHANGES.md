@@ -1,3 +1,8 @@
+## v0.8.0 (2022-03-27)
+
+* Rename the freestanding toolchain to solo5 (@dinosaure, #23)
+* Use ocamlformat (#@samoht, #25)
+
 ## v0.7.0 (2022-02-01)
 
 * `mirage-console-solo5` requires OCaml 4.08 (@hannesm, #20)
